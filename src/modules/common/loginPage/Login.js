@@ -21,8 +21,8 @@ export default function Login() {
     console.log("Secret Key:", secretKey);
 
     const adminLoginAPI = "http://localhost:5000/admLogin";
-    const teacherLoginAPI = "http://localhost:5000/teacherLogin";
-    const studentLoginAPI = "http://localhost:5000/studLogin";
+    const teacherLoginAPI = "http://localhost:5000/thrLogin";
+    const studentLoginAPI = "http://localhost:5000/stdLogin";
 
     if (role === "admin") {
       axios
@@ -48,14 +48,14 @@ export default function Login() {
     if (role === "teacher") {
       axios
         .post(`${teacherLoginAPI}`, {
-          teacherEmail: email,
-          teacherPassword: password,
+          thrEmail: email,
+          thrPassword: password,
         })
         .then((response) => {
           console.log(response.data);
           if (response.status === 200) {
             console.log("Teacher login successful");
-            navigate("/teacherDashboard");
+            navigate("/thrDash");
           } else {
             console.error("Teacher login failed");
           }
@@ -68,14 +68,14 @@ export default function Login() {
     if (role === "student") {
       axios
         .post(`${studentLoginAPI}`, {
-          studentEmail: email,
-          studentPassword: password,
+          stdEmail: email,
+          stdPassword: password,
         })
         .then((response) => {
           console.log(response.data);
           if (response.status === 200) {
             console.log("Student login successful");
-            navigate("/studentDashboard");
+            navigate("/stdDash");
           } else {
             console.error("Student login failed");
           }
