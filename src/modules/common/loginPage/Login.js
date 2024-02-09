@@ -1,55 +1,138 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./login.css";
-import Navbar from '../../../components/navbar/Navbar';
+import Navbar from "../../../components/navbar/Navbar";
+import axios from "axios";
+
+// Images
+import Avatar from "../../../assets/user-img.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [role, setRole] = useState(''); 
-  const [email, setEmail] = useState(''); 
-  const [password, setPassword] = useState(''); 
-  const [secretKey, setSecretKey] = useState(''); 
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [secretKey, setSecretKey] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    
     console.log("Role:", role);
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Secret Key:", secretKey);
-    
+
+    const adminLoginAPI = "http://localhost:5000/admLogin";
+    const teacherLoginAPI = "http://localhost:5000/teacherLogin";
+    const studentLoginAPI = "http://localhost:5000/studLogin";
+
+    if (role === "admin") {
+      axios
+        .post(`${adminLoginAPI}`, {
+          adminEmail: email,
+          adminPassword: password,
+          adminSecretKey: secretKey,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 200) {
+            console.log("Admin login successful");
+            navigate("/admdash");
+          } else {
+            console.error("Admin login failed");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during admin login:", error.message);
+        });
+    }
+
+    if (role === "teacher") {
+      axios
+        .post(`${teacherLoginAPI}`, {
+          teacherEmail: email,
+          teacherPassword: password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 200) {
+            console.log("Teacher login successful");
+            navigate("/teacherDashboard");
+          } else {
+            console.error("Teacher login failed");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during teacher login:", error.message);
+        });
+    }
+
+    if (role === "student") {
+      axios
+        .post(`${studentLoginAPI}`, {
+          studentEmail: email,
+          studentPassword: password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.status === 200) {
+            console.log("Student login successful");
+            navigate("/studentDashboard");
+          } else {
+            console.error("Student login failed");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during student login:", error.message);
+        });
+    }
   };
 
   return (
     <div>
-      <Navbar/>
-    <div className="login-container">
-      <h2>Login</h2>
-      <div className="form-group">
-        <label>Select Role:</label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="">Select Role</option>
-          <option value="admin">Admin</option>
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div className="form-group">
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      {role === 'admin' && (
+      <Navbar />
+      <div className="login-container">
+        <img className="avatar" src={Avatar} />
+        <h2>Login</h2>
         <div className="form-group">
-          <label>Secret Key:</label>
-          <input type="password" value={secretKey} onChange={(e) => setSecretKey(e.target.value)} />
+          <label>Select Role:</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+          </select>
         </div>
-      )}
-      <div className='form-group'>
-      <button onClick={handleLogin}>Login</button>
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        {role === "admin" && (
+          <div className="form-group">
+            <label>Secret Key:</label>
+            <input
+              type="password"
+              value={secretKey}
+              onChange={(e) => setSecretKey(e.target.value)}
+            />
+          </div>
+        )}
+        <div className="form-group">
+          <button onClick={handleLogin}>Login</button>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
