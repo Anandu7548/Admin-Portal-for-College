@@ -5,6 +5,7 @@ import Login from './modules/common/loginPage/Login';
 import AdmDashboard from './modules/admin/AdmDashboard/AdmDashboard';
 import TeacherDashboard from './modules/teacher/TeacherDashboard';
 import StudentDashboard from './modules/student/StudentDashboard';
+import AdmProfile from './modules/AdmProfile/AdmProfile';
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path='/auth' element={<Login/>}/>
-        <Route path='/admdash' element={<AdmDashboard/>}/>
+        <Route path='/admdash/:id' element={<AdmDashboard/>}/>
         <Route path='/thrDash' element={<TeacherDashboard/>}/>
         <Route path='/stdDash' element={<StudentDashboard/>}/>
+        <Route path='/admprofile' element={<AdmProfile/>}/>
       </Routes>
      </Router>
     </div>

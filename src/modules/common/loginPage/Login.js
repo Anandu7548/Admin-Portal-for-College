@@ -33,9 +33,11 @@ export default function Login() {
         })
         .then((response) => {
           console.log(response.data);
+          const id = response.data._id
+          console.log(id);
           if (response.status === 200) {
             console.log("Admin login successful");
-            navigate("/admdash");
+            navigate(`/admdash/${id}`);
           } else {
             console.error("Admin login failed");
           }
