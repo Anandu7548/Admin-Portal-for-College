@@ -5,7 +5,7 @@ import Login from './modules/common/loginPage/Login';
 import AdmDashboard from './modules/admin/AdmDashboard/AdmDashboard';
 import TeacherDashboard from './modules/teacher/TeacherDashboard';
 import StudentDashboard from './modules/student/StudentDashboard';
-import AdmProfile from './modules/AdmProfile/AdmProfile';
+import AdmProfile from './modules/admin/components/AdmProfile/AdmProfile';
 
 function App() {
   return (
