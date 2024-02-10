@@ -5,6 +5,7 @@ import './AdmDashboard.css';
 import AdmProfile from '../components/AdmProfile/AdmProfile';
 import TeachersList from '../components/Teachers/TeachersList';
 import AdminList from '../components/adminList/AdminList';
+import StudentsList from '../components/studentsList/StudentsList';
 
 function AdmDashboard() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ function AdmDashboard() {
       case 'teachers':
         return <TeachersList/>;
       case 'students':
-        return <div>Students Content</div>;
+        return <StudentsList/>;
       default:
         return <div>Select an option to view content</div>;
     }
