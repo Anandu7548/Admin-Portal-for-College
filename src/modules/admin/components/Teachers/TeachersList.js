@@ -4,9 +4,12 @@ import "./TeachersList.css"; // Import CSS file for TeachersList component
 
 export default function TeachersList() {
   const getTeacherAPIURL = "http://localhost:5000/getTeachers";
-  const addTeacherAPIURL = "http://localhost:5000/newTeacher"; // API endpoint to add new teacher
+  const addTeacherAPIURL = "http://localhost:5000/newTeacher";
 
+  // state to hold the data of the teachers
   const [teacherData, setTeacherData] = useState([]);
+
+  // state to hold the data of the newly created teacher
   const [newTeacher, setNewTeacher] = useState({
     thrUsername: "",
     thrEmail: "",
@@ -15,8 +18,11 @@ export default function TeachersList() {
     thrDept: "",
     thrPassword: "",
   });
-  const [filterDept, setFilterDept] = useState(""); // State for selected department filter
 
+  // state to hold the filter
+  const [filterDept, setFilterDept] = useState("");
+
+  // Automatically fetch the teacher from the database and show it in the table
   useEffect(() => {
     const getTeachers = async () => {
       try {
@@ -41,14 +47,12 @@ export default function TeachersList() {
     e.preventDefault();
     try {
       await axios.post(addTeacherAPIURL, newTeacher);
-      // After successfully adding the teacher, fetch the updated teacher list
       const response = await axios.get(getTeacherAPIURL);
       setTeacherData(response.data);
-      // Reset the form fields
       setNewTeacher({
         thrUsername: "",
         thrEmail: "",
-        thrPhoneNumber: "", // Corrected field name
+        thrPhoneNumber: "",
         thrPassword: "",
         thrDept: "",
         thrAadhar: "",

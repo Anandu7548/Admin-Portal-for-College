@@ -1,6 +1,6 @@
 .login-container {
   width: 600px;
-  margin:150px auto;
+  margin: 150px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -27,7 +27,7 @@
   overflow: hidden;
 }
 
-.login-container .avatar img{
+.login-container .avatar img {
   width: 100px;
   height: 100px;
 }

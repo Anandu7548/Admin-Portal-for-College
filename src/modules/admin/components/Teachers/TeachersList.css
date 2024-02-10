@@ -71,21 +71,14 @@
   background-color: #f2f2f2;
 }
 
-
-
-/* TeachersList.css */
-
-/* Style for the filter container */
 .filter-container {
   margin-bottom: 20px;
 }
 
-/* Style for the label */
 .filter-label {
   margin-right: 10px;
 }
 
-/* Style for the select dropdown */
 .filter-select {
   padding: 8px 12px;
   font-size: 16px;
@@ -94,7 +87,6 @@
   outline: none;
 }
 
-/* Optional: Style for the options in the dropdown */
 .filter-select option {
   padding: 8px 12px;
   font-size: 16px;

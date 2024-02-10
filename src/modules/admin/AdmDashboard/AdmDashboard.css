@@ -1,5 +1,4 @@
-
-.adminDashboard{
+.adminDashboard {
   display: flex;
   margin-top: 100px;
 }
@@ -38,6 +37,6 @@
 
 .content {
   flex-grow: 1;
-  margin-left:300px;
+  margin-left: 300px;
   padding: 20px;
 }
