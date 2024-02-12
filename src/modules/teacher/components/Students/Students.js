@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./studentsList.css"; // Import CSS file
+import "./Students.css"; // Import CSS file
 
-export default function StudentsList() {
+export default function Student() {
   const getStudentsAPIURL = "http://localhost:5000/getStudents";
-  const addStudentAPIURL = "http://localhost:5000/newStudent"; // Corrected API endpoint
+  const addStudentAPIURL = "http://localhost:5000/newStudent"; 
 
   const [studentData, setStudentData] = useState([]);
-  // const [stdSem,setstdSem] = useState("")
   const [newStudent, setNewStudent] = useState({
     stdName: "",
     stdEmail: "",
@@ -29,6 +28,7 @@ export default function StudentsList() {
     };
     getStudentData();
   }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewStudent((prevStudent) => ({
@@ -36,7 +36,6 @@ export default function StudentsList() {
       [name]: value,
     }));
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -139,7 +138,6 @@ export default function StudentsList() {
               <option value="6">6</option>
             </select>
           </div>
-
           <button type="submit">Add Student</button>
         </form>
       </div>
@@ -159,6 +157,7 @@ export default function StudentsList() {
                 <th>Reg No</th>
                 <th>Password</th>
                 <th>Certificates</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -171,6 +170,14 @@ export default function StudentsList() {
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
                   <td>{student.certificates}</td>
+                  <td>
+                    <button onClick={}>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button onClick={}>
+                    <i class="fa-solid fa-trash ms-2"></i>                  
+                    </button>
+                    </td>
                 </tr>
               ))}
             </tbody>

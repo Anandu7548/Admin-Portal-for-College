@@ -54,10 +54,11 @@ export default function Login() {
           thrPassword: password,
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data._id);
+          const id = response.data._id
           if (response.status === 200) {
             console.log("Teacher login successful");
-            navigate("/thrDash");
+            navigate(`/thrDash/${id}`);
           } else {
             console.error("Teacher login failed");
           }

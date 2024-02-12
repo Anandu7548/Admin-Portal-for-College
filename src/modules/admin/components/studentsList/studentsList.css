@@ -21,7 +21,8 @@
 
 .addStudent-form input[type="text"],
 .addStudent-form input[type="email"],
-.addStudent-form input[type="password"] {
+.addStudent-form input[type="password"] ,
+.addStudent-form select{
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
