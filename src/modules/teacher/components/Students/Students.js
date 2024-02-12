@@ -5,6 +5,7 @@ import "./Students.css"; // Import CSS file
 export default function Student() {
   const getStudentsAPIURL = "http://localhost:5000/getStudents";
   const addStudentAPIURL = "http://localhost:5000/newStudent"; 
+  const deleteStidentAPI = "http://localhost:5000/deleteStudent";
 
   const [studentData, setStudentData] = useState([]);
   const [newStudent, setNewStudent] = useState({
@@ -17,15 +18,29 @@ export default function Student() {
     stdSem:""
   });
 
+  const getStudentData = async () => {
+    try {
+      const response = await axios.get(getStudentsAPIURL);
+      setStudentData(response.data);
+    } catch (error) {
+      console.log("Error fetching students", error);
+    }
+  };
+
+  const deleteStudent = async (id) => {
+    console.log(id);
+    try {
+      const response = await axios.delete(`${deleteStidentAPI}/${id}`);
+      console.log(response.data); // Log the response from the server
+      getStudentData()
+    } catch (error) {
+      console.error("Error deleting student:", error);
+      // Handle errors, e.g., show an error message to the user
+    }
+  }
+
   useEffect(() => {
-    const getStudentData = async () => {
-      try {
-        const response = await axios.get(getStudentsAPIURL);
-        setStudentData(response.data);
-      } catch (error) {
-        console.log("Error fetching students", error);
-      }
-    };
+    
     getStudentData();
   }, []);
 
@@ -171,11 +186,11 @@ export default function Student() {
                   <td>{student.stdPassword}</td>
                   <td>{student.certificates}</td>
                   <td>
-                    <button onClick={}>
+                    <button >
                     <i class="fa-solid fa-pen-to-square"></i>
                     </button>
-                    <button onClick={}>
-                    <i class="fa-solid fa-trash ms-2"></i>                  
+                    <button onClick={() => deleteStudent(student._id)}>
+                      <i className="fa-solid fa-trash ms-2"></i>
                     </button>
                     </td>
                 </tr>
