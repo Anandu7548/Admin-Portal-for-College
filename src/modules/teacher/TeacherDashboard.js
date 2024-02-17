@@ -5,10 +5,6 @@ import Navbar from '../../components/navbar/Navbar';
 import TeacherProfile from './components/TeacherProfile/TeacherProfile';
 import Students from './components/Students/Students';
 
-// import TeachersList from '../components/Teachers/TeachersList';
-// import AdminList from '../components/adminList/AdminList';
-// import StudentsList from '../components/studentsList/StudentsList';
-
 function TeacherDashboard() {
   const { id } = useParams();
   const [selectedOption, setSelectedOption] = useState(null);

@@ -76,9 +76,11 @@ export default function Login() {
         })
         .then((response) => {
           console.log(response.data);
+          const id = response.data._id
+          console.log(id);
           if (response.status === 200) {
             console.log("Student login successful");
-            navigate("/stdDash");
+            navigate(`/stdDash/${id}`);
           } else {
             console.error("Student login failed");
           }
