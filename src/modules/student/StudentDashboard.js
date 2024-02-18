@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import './StudentDashboard.css';
 import Navbar from '../../components/navbar/Navbar';
 import StudentProfile from './components/studentprofile/StudentProfile';
+import Certificates from './components/certificates/Certificates';
 
 function StudentDashboard() {
   const { id } = useParams();
@@ -14,10 +15,8 @@ function StudentDashboard() {
     switch (selectedOption) {
       case 'profile':
         return <StudentProfile id={id} />;
-      case 'students':
-        // return <Students/> ;
-      case 'teachers':
-        // return <TeachersList/>;
+      case 'certificates':
+        return <Certificates id = {id}/> ;
     
       default:
         return <div>Select an option to view content</div>;
@@ -34,13 +33,8 @@ function StudentDashboard() {
               <button onClick={() => setSelectedOption('profile')}>MY PROFILE</button>
             </li>
             <li>
-              <button onClick={() => setSelectedOption('students')}>STUDENTS</button>
+              <button onClick={() => setSelectedOption('certificates')}>CERTIFICATES</button>
             </li>
-            <li>
-              <button onClick={() => setSelectedOption('options')}>OPTIONS</button>
-            </li>
-
-           
           </ul>
         </div>
         <div className="content">
