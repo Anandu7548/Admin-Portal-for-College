@@ -10,6 +10,7 @@ function Certificates() {
     const getCertificateAPI = `http://localhost:5000/getCertificate/${id}`
 
   const [showPopup, setShowPopup] = useState(false);
+  const [studentData,setstudentData] = useState([])
 
   const [certificateData, setCertificateData] = useState({
     certificateName: '',
@@ -74,6 +75,8 @@ function Certificates() {
     try{
       const response = await axios.get(getCertificateAPI)
       console.log(response.data);
+      setstudentData(response.data)
+      console.log(studentData);
     }
     catch(err){
       console.log(err);
@@ -82,7 +85,7 @@ function Certificates() {
 
   useEffect(()=>{
    getCertificate();
-  })
+  },[])
   return (
     <>
       <div className="card">
@@ -146,7 +149,29 @@ function Certificates() {
             </form>
           </div>
         </div>
-      )}
+      )
+      }
+    <div className="certificate-container">
+    {studentData ? (
+  studentData.map((certificate, index) => (
+    <div key={index} className="certificate-card">
+      <h2>{certificate.certificateName}</h2>
+      <a
+        href={`http://localhost:5000/getCertificate/${certificate.certificateUrl}`}
+        download
+      >
+        Download
+      </a>
+      <div className="certificate-details">
+        <p>Grade: {certificate.grade}</p>
+      </div>
+    </div>
+  ))
+) : (
+  <p>No certificates found</p>
+)}
+
+</div>
     </>
   );
 }
