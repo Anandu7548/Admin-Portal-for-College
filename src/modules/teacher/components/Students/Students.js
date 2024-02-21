@@ -184,7 +184,13 @@ export default function Student() {
                   <td>{student.stdDept}</td>
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
-                  <td>{student.certificates}</td>
+                  <td>
+        <ul>
+          {student.certificates.map((certificate, index) => (
+            <li key={index}>{certificate.certificateName}</li>
+          ))}
+        </ul>
+      </td>
                   <td>
                     <button >
                     <i class="fa-solid fa-pen-to-square"></i>
