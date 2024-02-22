@@ -19,6 +19,7 @@ function StudentProfile({id}) {
     stdDept:"",
     stdSem:""
   });
+  
 // State to hold edited profile data
 const [editedProfileData, setEditedProfileData] = useState({
   stdName: "",
@@ -64,13 +65,12 @@ const [editedProfileData, setEditedProfileData] = useState({
   };
 
 
- //  fetch the student dedtails and shows it in the student profile
  useEffect(() => {
     const studentDetails = async () => {
       try {
         const response = await axios.get(studentProfileAPI);
         console.log(response.data);
-        setProfileData(response.data); // Set actual data from response
+        setProfileData(response.data); 
       } catch (error) {
         console.error("Error fetching teacher details:", error);
       }

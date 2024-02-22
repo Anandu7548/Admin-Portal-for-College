@@ -33,11 +33,11 @@ function Certificates() {
       const formData = new FormData();
       formData.append('certificateName', certificateData.certificateName);
       formData.append('grade', certificateData.grade);
-      formData.append('file', certificateData.file); // Append the file
+      formData.append('file', certificateData.file);
   
       const response = await axios.post(addCertificateAPI, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data' // Set proper headers for file upload
+          'Content-Type': 'multipart/form-data' 
         }
       });
   
@@ -52,7 +52,6 @@ function Certificates() {
       setShowPopup(false);
     } catch (error) {
       console.error('Error uploading certificate:', error.message);
-      // Handle error
     }
   };
   
@@ -71,6 +70,8 @@ function Certificates() {
       file
     }));
   };
+
+
   const getCertificate=async()=>{
     try{
       const response = await axios.get(getCertificateAPI)
@@ -86,6 +87,7 @@ function Certificates() {
   useEffect(()=>{
    getCertificate();
   },[])
+
   return (
     <>
       <div className="card">
@@ -157,7 +159,7 @@ function Certificates() {
     <div key={index} className="certificate-card">
       <h2>{certificate.certificateName}</h2>
       <a
-        href={`http://localhost:5000/getCertificate/${certificate.certificateUrl}`}
+        href={`http://localhost:5000/${certificate.certificateUrl}`}
         download
       >
         Download

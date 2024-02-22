@@ -10,7 +10,6 @@ function StudentDashboard() {
   console.log(id);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Render the page contents bassed on the switch case
   const renderContent = () => {
     switch (selectedOption) {
       case 'profile':
