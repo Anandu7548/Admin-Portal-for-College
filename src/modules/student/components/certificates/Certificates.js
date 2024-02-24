@@ -44,6 +44,8 @@ function Certificates() {
       console.log(response.data);
       console.log('Certificate uploaded successfully');
   
+      // Call the API to calculate activity points
+  
       setCertificateData({
         certificateName: '',
         grade: '',
@@ -54,6 +56,7 @@ function Certificates() {
       console.error('Error uploading certificate:', error.message);
     }
   };
+  
   
   const handleChange = (event) => {
     const { name, value } = event.target;

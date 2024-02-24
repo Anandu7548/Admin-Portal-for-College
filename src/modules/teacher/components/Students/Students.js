@@ -4,19 +4,23 @@ import "./Students.css"; // Import CSS file
 
 export default function Student() {
   const getStudentsAPIURL = "http://localhost:5000/getStudents";
-  const addStudentAPIURL = "http://localhost:5000/newStudent"; 
-  const deleteStidentAPI = "http://localhost:5000/deleteStudent";
+  const addStudentAPIURL = "http://localhost:5000/newStudent";
+  const deleteStudentAPI = "http://localhost:5000/deleteStudent";
 
   const [studentData, setStudentData] = useState([]);
   const [newStudent, setNewStudent] = useState({
     stdName: "",
     stdEmail: "",
     stdPhoneNumber: "",
-    regNo:"",
+    regNo: "",
     stdDept: "",
-    stdPassword:"",
-    stdSem:""
+    stdPassword: "",
+    stdSem: "",
   });
+
+  useEffect(() => {
+    getStudentData();
+  }, []);
 
   const getStudentData = async () => {
     try {
@@ -30,19 +34,13 @@ export default function Student() {
   const deleteStudent = async (id) => {
     console.log(id);
     try {
-      const response = await axios.delete(`${deleteStidentAPI}/${id}`);
-      console.log(response.data); // Log the response from the server
-      getStudentData()
+      const response = await axios.delete(`${deleteStudentAPI}/${id}`);
+      console.log(response.data);
+      getStudentData();
     } catch (error) {
       console.error("Error deleting student:", error);
-      // Handle errors, e.g., show an error message to the user
     }
-  }
-
-  useEffect(() => {
-    
-    getStudentData();
-  }, []);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,16 +60,26 @@ export default function Student() {
       setNewStudent({
         stdName: "",
         stdEmail: "",
-        regNo:"",
+        regNo: "",
         stdPhoneNumber: "",
         stdDept: "",
-        stdPassword:"",
-        stdSem:""
+        stdPassword: "",
+        stdSem: "",
       });
       console.log("New student added successfully");
     } catch (error) {
       console.log("Error adding new student:", error);
     }
+  };
+
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  const openPopup = (student) => {
+    setSelectedStudent(student);
+  };
+
+  const closePopup = () => {
+    setSelectedStudent(null);
   };
 
   return (
@@ -140,9 +148,12 @@ export default function Student() {
             />
           </div>
           <div>
-            <label htmlFor="sem"> Semester:</label>
-            <select id="sem" name="stdSem"
-            onChange={handleChange}
+            <label htmlFor="stdSem"> Semester:</label>
+            <select
+              id="stdSem"
+              name="stdSem"
+              onChange={handleChange}
+              value={newStudent.stdSem}
             >
               <option value="">--Select--</option>
               <option value="1">1</option>
@@ -156,9 +167,6 @@ export default function Student() {
           <button type="submit">Add Student</button>
         </form>
       </div>
-      <div className="studentListContainer">
-
-      </div>
       <div className="studentsList">
         <h1>Students List</h1>
         <div className="students-table">
@@ -171,40 +179,53 @@ export default function Student() {
                 <th>Department</th>
                 <th>Reg No</th>
                 <th>Password</th>
-                <th>Certificates</th>
+                {/* <th>Certificates</th> */}
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {studentData.map((student, index) => (
-                <tr key={index}>
+                <tr key={index} onClick={() => openPopup(student)}>
                   <td>{student.stdName}</td>
                   <td>{student.stdEmail}</td>
                   <td>{student.stdPhoneNumber}</td>
                   <td>{student.stdDept}</td>
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
+                  {/* <td>
+                    <ul>
+                      {student.certificates.map((certificate, index) => (
+                        <li key={index}>{certificate.certificateName}</li>
+                      ))}
+                    </ul>
+                  </td> */}
                   <td>
-        <ul>
-          {student.certificates.map((certificate, index) => (
-            <li key={index}>{certificate.certificateName}</li>
-          ))}
-        </ul>
-      </td>
-                  <td>
-                    <button >
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <button>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                     <button onClick={() => deleteStudent(student._id)}>
                       <i className="fa-solid fa-trash ms-2"></i>
                     </button>
-                    </td>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {/* Popup component */}
+      {selectedStudent && (
+        <div className="popup-content1">
+          <h2>{selectedStudent.stdName}'s Certificates</h2>
+          <ul>
+            {selectedStudent.certificates.map((certificate, index) => (
+              <li key={index}>{certificate.certificateName}</li>
+            ))}
+          </ul>
+          <h2>Activity Points: {selectedStudent.ActivityPoints}</h2>
+          <button onClick={closePopup}>Close</button>
+        </div>
+      )}
     </div>
   );
 }

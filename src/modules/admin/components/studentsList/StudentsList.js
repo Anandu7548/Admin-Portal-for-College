@@ -4,18 +4,18 @@ import "./studentsList.css"; // Import CSS file
 
 export default function StudentsList() {
   const getStudentsAPIURL = "http://localhost:5000/getStudents";
-  const addStudentAPIURL = "http://localhost:5000/newStudent"; // Corrected API endpoint
+  const addStudentAPIURL = "http://localhost:5000/newStudent";
 
   const [studentData, setStudentData] = useState([]);
-  // const [stdSem,setstdSem] = useState("")
+  const [selectedStudent, setSelectedStudent] = useState(null);
   const [newStudent, setNewStudent] = useState({
     stdName: "",
     stdEmail: "",
     stdPhoneNumber: "",
-    regNo:"",
+    regNo: "",
     stdDept: "",
-    stdPassword:"",
-    stdSem:""
+    stdPassword: "",
+    stdSem: "",
   });
 
   useEffect(() => {
@@ -29,6 +29,15 @@ export default function StudentsList() {
     };
     getStudentData();
   }, []);
+
+  const handleStudentClick = (student) => {
+    setSelectedStudent(student);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedStudent(null);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewStudent((prevStudent) => ({
@@ -36,7 +45,6 @@ export default function StudentsList() {
       [name]: value,
     }));
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,17 +56,46 @@ export default function StudentsList() {
       setNewStudent({
         stdName: "",
         stdEmail: "",
-        regNo:"",
+        regNo: "",
         stdPhoneNumber: "",
         stdDept: "",
-        stdPassword:"",
-        stdSem:""
+        stdPassword: "",
+        stdSem: "",
       });
       console.log("New student added successfully");
     } catch (error) {
       console.log("Error adding new student:", error);
     }
   };
+
+  const renderCertificatesPopup = () => {
+    if (!selectedStudent) return null;
+  
+    return (
+      <div className="certificates-popup">
+        <div className="popup-content">
+          <span className="close" onClick={handleClosePopup}>
+            &times;
+          </span>
+          <h2>{selectedStudent.stdName}'s Certificates</h2>
+          <div className="certificates-list">
+            <ul>
+              {selectedStudent.certificates.map((certificate, index) => (
+                <li key={index}>
+                  <strong>Name:</strong> {certificate.certificateName},{" "}
+                  <strong>Grade:</strong> {certificate.grade}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="activity-points">
+            <h3>Activity Points: {selectedStudent.ActivityPoints}</h3>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
 
   return (
     <div>
@@ -127,9 +164,7 @@ export default function StudentsList() {
           </div>
           <div>
             <label htmlFor="sem"> Semester:</label>
-            <select id="sem" name="stdSem"
-            onChange={handleChange}
-            >
+            <select id="sem" name="stdSem" onChange={handleChange}>
               <option value="">--Select--</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -143,9 +178,6 @@ export default function StudentsList() {
           <button type="submit">Add Student</button>
         </form>
       </div>
-      <div className="studentListContainer">
-
-      </div>
       <div className="studentsList">
         <h1>Students List</h1>
         <div className="students-table">
@@ -158,25 +190,24 @@ export default function StudentsList() {
                 <th>Department</th>
                 <th>Reg No</th>
                 <th>Password</th>
-                <th>Certificates</th>
               </tr>
             </thead>
             <tbody>
               {studentData.map((student, index) => (
-                <tr key={index}>
+                <tr key={index} onClick={() => handleStudentClick(student)}>
                   <td>{student.stdName}</td>
                   <td>{student.stdEmail}</td>
                   <td>{student.stdPhoneNumber}</td>
                   <td>{student.stdDept}</td>
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
-                  <td>{student.certificates}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {renderCertificatesPopup()}
     </div>
   );
 }
