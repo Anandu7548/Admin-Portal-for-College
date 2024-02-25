@@ -5,9 +5,9 @@ import "./studentsList.css"; // Import CSS file
 export default function StudentsList() {
   const getStudentsAPIURL = "http://localhost:5000/getStudents";
   const addStudentAPIURL = "http://localhost:5000/newStudent";
+  const deleteStudentAPIURL = "http://localhost:5000/deleteStudent";
 
   const [studentData, setStudentData] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState(null);
   const [newStudent, setNewStudent] = useState({
     stdName: "",
     stdEmail: "",
@@ -29,14 +29,6 @@ export default function StudentsList() {
     };
     getStudentData();
   }, []);
-
-  const handleStudentClick = (student) => {
-    setSelectedStudent(student);
-  };
-
-  const handleClosePopup = () => {
-    setSelectedStudent(null);
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,34 +60,16 @@ export default function StudentsList() {
     }
   };
 
-  const renderCertificatesPopup = () => {
-    if (!selectedStudent) return null;
-  
-    return (
-      <div className="certificates-popup">
-        <div className="popup-content">
-          <span className="close" onClick={handleClosePopup}>
-            &times;
-          </span>
-          <h2>{selectedStudent.stdName}'s Certificates</h2>
-          <div className="certificates-list">
-            <ul>
-              {selectedStudent.certificates.map((certificate, index) => (
-                <li key={index}>
-                  <strong>Name:</strong> {certificate.certificateName},{" "}
-                  <strong>Grade:</strong> {certificate.grade}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="activity-points">
-            <h3>Activity Points: {selectedStudent.ActivityPoints}</h3>
-          </div>
-        </div>
-      </div>
-    );
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${deleteStudentAPIURL}/${id}`);
+      const updatedStudents = studentData.filter((student) => student._id !== id);
+      setStudentData(updatedStudents);
+      console.log("Student deleted successfully");
+    } catch (error) {
+      console.log("Error deleting student:", error);
+    }
   };
-  
 
   return (
     <div>
@@ -190,24 +164,27 @@ export default function StudentsList() {
                 <th>Department</th>
                 <th>Reg No</th>
                 <th>Password</th>
+                <th>Action</th> {/* Add new column for delete action */}
               </tr>
             </thead>
             <tbody>
               {studentData.map((student, index) => (
-                <tr key={index} onClick={() => handleStudentClick(student)}>
+                <tr key={student._id}>
                   <td>{student.stdName}</td>
                   <td>{student.stdEmail}</td>
                   <td>{student.stdPhoneNumber}</td>
                   <td>{student.stdDept}</td>
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
+                  <td>
+                    <button onClick={() => handleDelete(student._id)}>Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-      {renderCertificatesPopup()}
     </div>
   );
 }

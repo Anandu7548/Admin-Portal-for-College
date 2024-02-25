@@ -4,6 +4,7 @@ import './TeacherDashboard.css';
 import Navbar from '../../components/navbar/Navbar';
 import TeacherProfile from './components/TeacherProfile/TeacherProfile';
 import Students from './components/Students/Students';
+import thrgif from "../../assets/teacherBanner.png";
 
 function TeacherDashboard() {
   const { id } = useParams();
@@ -20,7 +21,12 @@ function TeacherDashboard() {
         // return <TeachersList/>;
     
       default:
-        return <div>Select an option to view content</div>;
+        return <div className='admigifcontainer'>
+        <div className='admincot'>
+        <h1>Make the changes you want. It may affect all the faculties.</h1>
+        </div>
+        <img  className="admgif" src={thrgif} />
+      </div>;
     }
   };
 

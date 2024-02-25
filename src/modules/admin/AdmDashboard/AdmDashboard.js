@@ -6,6 +6,7 @@ import AdmProfile from '../components/AdmProfile/AdmProfile';
 import TeachersList from '../components/Teachers/TeachersList';
 import AdminList from '../components/adminList/AdminList';
 import StudentsList from '../components/studentsList/StudentsList';
+import admgif from "../../../assets/admgif.gif";
 
 function AdmDashboard() {
   const { id } = useParams();
@@ -22,7 +23,12 @@ function AdmDashboard() {
       case 'students':
         return <StudentsList/>;
       default:
-        return <div>Select an option to view content</div>;
+        return <div className='admigifcontainer'>
+          <div className='admincot'>
+          <h1>Make the changes you want. It may affect all the faculties.</h1>
+          </div>
+          <img  className="admgif" src={admgif} />
+        </div>;
     }
   };
 

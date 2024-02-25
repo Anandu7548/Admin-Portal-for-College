@@ -6,6 +6,7 @@ import axios from "axios";
 // Images
 import Avatar from "../../../assets/user-img.png";
 import { useNavigate } from "react-router-dom";
+import loginBanner from "../../../assets/loginPage.png";
 
 export default function Login() {
   const [role, setRole] = useState("");
@@ -92,9 +93,13 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="loginPageMain">
       <Navbar />
+      <div className="banner">
+          <img src={loginBanner}/>
+        </div>
       <div className="login-container">
+       
         <img className="avatar" src={Avatar} />
         <h2>Login</h2>
         <div className="form-group">

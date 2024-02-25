@@ -18,10 +18,12 @@ p {
   justify-content: center;
   display: flex;
   padding: 20px 0;
+  background: #86a8cf;
 }
 
 .homepage-container .content {
   margin: 50px;
+  color: #26425a;
 }
 
 .homepage-container .content .desc {
@@ -59,11 +61,11 @@ p {
 
 .admindet-container,
 .studentdet-container {
-  background: #555;
+  background: #26425a;
 }
 
 .teacherdet-container {
-  background: #000;
+  background: #86a8cf;
 }
 
 .admindet-container .content,

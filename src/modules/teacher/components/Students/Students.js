@@ -179,7 +179,6 @@ export default function Student() {
                 <th>Department</th>
                 <th>Reg No</th>
                 <th>Password</th>
-                {/* <th>Certificates</th> */}
                 <th>Actions</th>
               </tr>
             </thead>
@@ -192,17 +191,9 @@ export default function Student() {
                   <td>{student.stdDept}</td>
                   <td>{student.regNo}</td>
                   <td>{student.stdPassword}</td>
-                  {/* <td>
-                    <ul>
-                      {student.certificates.map((certificate, index) => (
-                        <li key={index}>{certificate.certificateName}</li>
-                      ))}
-                    </ul>
-                  </td> */}
+                
                   <td>
-                    <button>
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </button>
+                  
                     <button onClick={() => deleteStudent(student._id)}>
                       <i className="fa-solid fa-trash ms-2"></i>
                     </button>

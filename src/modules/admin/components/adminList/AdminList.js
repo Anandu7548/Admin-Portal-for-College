@@ -1,5 +1,3 @@
-// AdminList.jsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AdminList.css";
@@ -15,6 +13,7 @@ function AdminList() {
 
   const getAdminAPIURL = "http://localhost:5000/getAdmins";
   const addAdminAPIURL = "http://localhost:5000/newAdmin";
+  const deleteAdminAPIURL = "http://localhost:5000/deleteAdmin";
 
   useEffect(() => {
     const getAdminData = async () => {
@@ -52,6 +51,17 @@ function AdminList() {
       console.log("New admin added successfully");
     } catch (error) {
       console.log("Error adding new admin:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${deleteAdminAPIURL}/${id}`);
+      const updatedAdmins = adminData.filter((admin) => admin._id !== id);
+      setAdminData(updatedAdmins);
+      console.log("Admin deleted successfully");
+    } catch (error) {
+      console.log("Error deleting admin:", error);
     }
   };
 
@@ -122,15 +132,21 @@ function AdminList() {
               <th>Admin Phone Number</th>
               <th>Admin Email</th>
               <th>Admin Secret Key</th>
+              <th>Action</th> {/* New column for delete action */}
             </tr>
           </thead>
           <tbody>
-            {adminData.map((admin, index) => (
-              <tr key={index}>
+            {adminData.map((admin) => (
+              <tr key={admin._id}>
                 <td>{admin.adminUsername}</td>
                 <td>{admin.adminPhoneNumber}</td>
                 <td>{admin.adminEmail}</td>
                 <td>{admin.adminSecretKey}</td>
+                <td>
+                  <button onClick={() => handleDelete(admin._id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

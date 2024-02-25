@@ -5,6 +5,7 @@ import "./TeachersList.css"; // Import CSS file for TeachersList component
 export default function TeachersList() {
   const getTeacherAPIURL = "http://localhost:5000/getTeachers";
   const addTeacherAPIURL = "http://localhost:5000/newTeacher";
+  const deleteTeacherAPIURL = "http://localhost:5000/deleteTeacher";
 
   // state to hold the data of the teachers
   const [teacherData, setTeacherData] = useState([]);
@@ -68,6 +69,17 @@ export default function TeachersList() {
   const filteredTeacherData = filterDept
     ? teacherData.filter((teacher) => teacher.thrDept === filterDept)
     : teacherData;
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${deleteTeacherAPIURL}/${id}`);
+      const updatedTeachers = teacherData.filter((teacher) => teacher._id !== id);
+      setTeacherData(updatedTeachers);
+      console.log("Teacher deleted successfully");
+    } catch (error) {
+      console.log("Error deleting teacher:", error);
+    }
+  };
 
   return (
     <div>
@@ -150,10 +162,11 @@ export default function TeachersList() {
             onChange={(e) => setFilterDept(e.target.value)}
           >
             <option value="">All Departments</option>
-            {/* Assuming you have a list of departments */}
             <option value="Computer">Computer</option>
             <option value="Mechanical">Mechanical</option>
-            {/* Add more options for each department */}
+            <option value="Civil">Civil</option>
+            <option value="Electrical">Electrical</option>
+            
           </select>
         </div>
 
@@ -165,6 +178,7 @@ export default function TeachersList() {
               <th>Phone</th>
               <th>Department</th>
               <th>Aadhar Number</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -175,6 +189,9 @@ export default function TeachersList() {
                 <td>{teacher.thrPhoneNumber}</td>
                 <td>{teacher.thrDept}</td>
                 <td>{teacher.thrAadhar}</td>
+                <td>
+                  <button onClick={() => handleDelete(teacher._id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
